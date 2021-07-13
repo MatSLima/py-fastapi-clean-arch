@@ -1,2 +1,2 @@
-# shipay-api
-API designed to achieve all requirements for shipay backend test
+# py-fastapi-clean-arch
+Python clean architecture structure with FastAPI

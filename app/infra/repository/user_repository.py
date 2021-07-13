@@ -1,13 +1,18 @@
-from sqlalchemy.orm import Session
+from typing import List
 
-from app.infra.repository.base_repository import BaseRepository
-from app.infra.sql_app.models import User
+from app.domain.interfaces import IUserRepository
+from app.infra.sql_app import models
+from app.infra.sql_app.models import UserModel
+from app.interface.user import schema
 
 
-class UserRepository(BaseRepository):
-    def __init__(self, db: Session) -> None:
-        super().__init__(db)
-        self._db = db
+class UserRepository(IUserRepository):
+    def create_user(self, user: schema.UserCreate) -> UserModel:
+        db_item = models.UserModel(**user.dict())
+        self._db.add(db_item)
+        self._db.commit()
+        self._db.refresh(db_item)
+        return db_item
 
-    def get_user(self, user_id: int):
-        return self._db.query(User).filter(User.id == user_id).first()
+    def get_users(self, query_param=None) -> List[UserModel]:
+        return self._db.query(UserModel).filter_by(**query_param).all()
