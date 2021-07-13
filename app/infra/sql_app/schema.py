@@ -8,6 +8,9 @@ class UserBase(BaseModel):
 class User(UserBase):
     id: int
     name: str
+    email: str
+    password: str
+    role_id: int
 
     class Config:
         orm_mode = True

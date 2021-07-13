@@ -10,4 +10,4 @@ class UserRepository(BaseRepository):
         self._db = db
 
     def get_user(self, user_id: int):
-        return self._db.query(User).filter(User.id == user_id)
+        return self._db.query(User).filter(User.id == user_id).first()
